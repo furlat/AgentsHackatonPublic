@@ -10,6 +10,8 @@ import polars as pl
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
+import asyncio
+import sys
 
 
 ROOT_DIR = pathlib.Path(__file__).parent.resolve()
@@ -420,3 +422,62 @@ def embeddings_graph(
 
     return JSONResponse({"ok": True, "start_offset": start_offset, "nodes": nodes, "edges": edges})
 
+
+@app.post("/api/schema")
+async def save_schema(payload: Dict[str, Any]) -> JSONResponse:
+    schema_text = str(payload.get("schema", ""))
+    return JSONResponse({"ok": True, "length": len(schema_text)})
+
+
+@app.post("/api/modal/extract-schema")
+async def modal_extract_schema(payload: Dict[str, Any]) -> JSONResponse:
+    """Spawn the parent-level book processor as a background process.
+
+    The UI calls this to kick off extraction without blocking.
+    Optional payload keys (ignored by script unless it parses argv):
+      book_start, num_books, parallel_books, max_calls, max_batch_size
+    """
+    parent_dir = ROOT_DIR.parent
+    script_path = parent_dir / "book_processor.py"
+    if not script_path.exists():
+        return JSONResponse({"ok": False, "error": f"Script not found: {script_path}"}, status_code=400)
+
+    # Optional numeric args (best-effort); if not used by script's __main__, it will ignore
+    args: List[str] = []
+    def _add_arg(key: str, flag: str):
+        val = payload.get(key)
+        if val is None:
+            return
+        try:
+            args.extend([f"--{flag}", str(int(val))])
+        except Exception:
+            pass
+
+    _add_arg("book_start", "book_start")
+    _add_arg("num_books", "num_books")
+    _add_arg("parallel_books", "parallel_books")
+    _add_arg("max_batch_size", "max_batch_size")
+    if payload.get("max_calls") is not None:
+        try:
+            args.extend(["--max_calls", str(int(payload["max_calls"]))])
+        except Exception:
+            pass
+
+    async def _spawn():
+        try:
+            await asyncio.create_subprocess_exec(
+                sys.executable,
+                str(script_path),
+                *args,
+                cwd=str(parent_dir),
+                stdout=asyncio.subprocess.DEVNULL,
+                stderr=asyncio.subprocess.DEVNULL,
+                stdin=asyncio.subprocess.DEVNULL,
+                creationflags=(0x00000008 if os.name == 'nt' else 0),  # DETACHED_PROCESS on Windows
+            )
+        except Exception:
+            # Ignore spawn errors for now; client gets immediate response anyway
+            pass
+
+    asyncio.create_task(_spawn())
+    return JSONResponse({"ok": True, "message": "Processor started"})
