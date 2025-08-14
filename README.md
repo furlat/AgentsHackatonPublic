@@ -1,4 +1,4 @@
-# Book Processing System
+# GigaReader
 
 A humble attempt at extracting structured narrative actions from books using AI inference.
 
@@ -142,12 +142,19 @@ modal deploy modal_servers/modal_qwen30b.py
 
 ## Dependencies
 
-Key libraries used:
-- `minference`: Custom inference orchestration framework
-- `polars`: Fast data processing
-- `modal`: Serverless GPU infrastructure
-- `vllm`: High-performance LLM serving
-- `pydantic`: Data validation and serialization
+### Core Framework
+- **`minference`**: Custom inference orchestration framework (included in `MultiInference/` directory)
+  - Handles parallel API calls and rate limiting
+  - Provides structured output via Pydantic models
+  - Manages LLM client configurations and threading
+
+### External Libraries
+- `polars`: Fast data processing for handling book data
+- `modal`: Serverless GPU infrastructure for model hosting
+- `vllm`: High-performance LLM serving with CUDA optimization
+- `pydantic`: Data validation and serialization for structured outputs
+- `asyncio`: Asynchronous processing for parallel book analysis
+- `dotenv`: Environment variable management
 
 ## Humble Notes
 
