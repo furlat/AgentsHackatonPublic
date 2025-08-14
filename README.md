@@ -8,8 +8,12 @@ This system processes narrative text from books to extract structured informatio
 
 # Data and Results:
 
-the processed Gutenberg books can be found here `https://drive.google.com/drive/folders/1bUQqgw4jMzr1Sq3z9p39ari-5IpHAQcR?usp=drive_link` and they need to be copied in the `/data` folder.
-while a subset of results can be found here `https://drive.google.com/drive/folders/1ycbZhwWTRlofnmJfoGkmWQecz3cUJBhP?usp=drive_link` and they need to be copied in the `/data/outs` folder for post-processing.
+![Alice in Wonderland Analysis](resources/alice.png)
+
+The processed Gutenberg books can be found here `https://drive.google.com/drive/folders/1bUQqgw4jMzr1Sq3z9p39ari-5IpHAQcR?usp=drive_link` and they need to be copied in the `/data` folder.
+While a subset of results can be found here `https://drive.google.com/drive/folders/1ycbZhwWTRlofnmJfoGkmWQecz3cUJBhP?usp=drive_link` and they need to be copied in the `/data/outs` folder for post-processing.
+
+📊 **For detailed analysis and visualization of results, see [book_analysis.ipynb](book_analysis.ipynb)**
 
 ## System Architecture
 
