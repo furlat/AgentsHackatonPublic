@@ -1,0 +1,6 @@
+/.venv
+*.json
+*.parquet
+data_explorer.ipynb
+gutenberg_old.py
+*.pyc
