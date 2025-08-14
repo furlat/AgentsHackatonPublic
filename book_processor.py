@@ -789,4 +789,4 @@ async def process_books_parallel(book_start, num_books, parallel_books=4, max_ca
 
 
 if __name__ == "__main__":
-    asyncio.run(process_books_parallel(book_start=0, num_books=10,parallel_books=10,max_batch_size=160))
+    asyncio.run(process_books_parallel(book_start=0, num_books=5,parallel_books=5,max_batch_size=160))
