@@ -1,0 +1,1 @@
+uv run --with fastapi==0.111.0 --with "uvicorn[standard]==0.30.1" --with polars==1.5.0 uvicorn server:app --host 127.0.0.1 --port 8000 --reload
