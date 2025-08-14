@@ -100,6 +100,51 @@ The system identifies a broad range of actions:
 - **Rate Limits**: 80 requests/minute, 200M tokens/minute
 - **Engine**: vLLM V1 for improved performance
 
+## Installation
+
+### Prerequisites
+- Python 3.8+
+- Git
+
+### Setup Instructions
+
+1. **Clone the GigaReader repository**
+   ```bash
+   git clone https://github.com/yourusername/GigaReader.git
+   cd GigaReader
+   ```
+
+2. **Install MinInference framework dependencies**
+   ```bash
+   pip install -r MultiInference/requirements.txt
+   ```
+
+3. **Install MinInference in development mode**
+   ```bash
+   pip install -e MultiInference/
+   ```
+
+4. **Install additional dependencies**
+   ```bash
+   pip install polars python-dotenv
+   ```
+
+5. **Set up environment variables**
+   Create a `.env` file in the root directory with your API keys:
+   ```bash
+   # Add your API keys here
+   OPENAI_API_KEY=your_openai_key_here
+   # Add other provider keys as needed
+   ```
+
+### Verify Installation
+
+You can verify the installation by running:
+```python
+from minference.threads.inference import InferenceOrchestrator
+print("MinInference successfully installed!")
+```
+
 ## Usage
 
 ### Basic Processing
