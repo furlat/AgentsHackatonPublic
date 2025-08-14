@@ -6,6 +6,11 @@ A humble attempt at extracting structured narrative actions from books using AI 
 
 This system processes narrative text from books to extract structured information about actions, interactions, and behaviors between entities. It's designed to identify and catalog the rich tapestry of actions that occur in stories - from physical movements to emotional changes.
 
+# Data and Results:
+
+the processed Gutenberg books can be found here `https://drive.google.com/drive/folders/1bUQqgw4jMzr1Sq3z9p39ari-5IpHAQcR?usp=drive_link` and they need to be copied in the `/data` folder.
+while a subset of results can be found here `https://drive.google.com/drive/folders/1ycbZhwWTRlofnmJfoGkmWQecz3cUJBhP?usp=drive_link` and they need to be copied in the `/data/outs` folder for post-processing.
+
 ## System Architecture
 
 ### Core Components
@@ -110,7 +115,7 @@ The system identifies a broad range of actions:
 
 1. **Clone the GigaReader repository**
    ```bash
-   git clone https://github.com/yourusername/GigaReader.git
+   git clone https://github.com/furlat/GigaReader.git
    cd GigaReader
    ```
 
@@ -126,11 +131,11 @@ The system identifies a broad range of actions:
 
 4. **Install additional dependencies**
    ```bash
-   pip install polars python-dotenv
+   pip install -r requirements.txt
    ```
 
 5. **Set up environment variables**
-   Create a `.env` file in the root directory with your API keys:
+   Create a `.env` file in the root directory with your API keys if you want to use OpenAi but this demo is with Modal:
    ```bash
    # Add your API keys here
    OPENAI_API_KEY=your_openai_key_here
